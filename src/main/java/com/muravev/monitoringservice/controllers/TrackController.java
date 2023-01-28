@@ -12,14 +12,20 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/api/v1/track")
 @RequiredArgsConstructor
-public class TransportController {
+public class TrackController {
     private final TransportService transportService;
 
 
     @GetMapping
-    public Flux<TransportTimePoint> getTrack(@RequestParam("transport") Long transportId) {
+    public Flux<TransportTimePoint> getTrack(@RequestParam("t") Long transportId) {
         return transportService.getTrack(transportId);
     }
+
+    @GetMapping("/last")
+    public Mono<TransportTimePoint> getLastPoint(@RequestParam("t") Long transportId) {
+        return transportService.lastPoint(transportId);
+    }
+
 
     @PostMapping
     public Mono<TransportTimePoint> savePoint(@RequestBody @Valid TransportPoint point) {
