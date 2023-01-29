@@ -34,7 +34,7 @@ public class PointGenerator {
     public void addPoint() {
         int transport = new Random().nextInt(10, 1000);
         log.info("transport: {}", transport);
-        List<Point> points = mapper.readValue(new File("src/main/resources/files/route1.json"), new TypeReference<List<Point>>() {
+        List<Point> points = mapper.readValue(new File("/dummy-files/route1.json"), new TypeReference<List<Point>>() {
         });
         for (var point : points) {
             var timePoint = new TransportTimePoint()
