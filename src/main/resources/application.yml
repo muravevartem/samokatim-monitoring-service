@@ -4,6 +4,3 @@ spring:
       database: monitoring
       port: 27017
       authentication-database: admin
-
-front:
-  urls: 'localhost:3000'
