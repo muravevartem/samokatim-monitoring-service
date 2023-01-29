@@ -1,9 +1,6 @@
 spring:
   data:
     mongodb:
-      username: application
-      password: pwd
       database: monitoring
-      host: 127.0.0.1
       port: 27017
       authentication-database: admin
