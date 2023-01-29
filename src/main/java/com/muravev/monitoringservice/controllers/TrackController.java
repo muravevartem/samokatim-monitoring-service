@@ -5,6 +5,7 @@ import com.muravev.monitoringservice.models.TransportPoint;
 import com.muravev.monitoringservice.services.TransportService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -32,4 +33,5 @@ public class TrackController {
     public Mono<TransportTimePoint> savePoint(@RequestBody @Valid TransportPoint point) {
         return transportService.savePoint(point);
     }
+
 }
