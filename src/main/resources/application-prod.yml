@@ -4,3 +4,6 @@ spring:
       host: mongo-db
       username: ${DB_USERNAME}
       password: ${DB_PASSWORD}
+
+front:
+  urls: 'localhost:3000, 1218407-cu57808.tw1.ru'
