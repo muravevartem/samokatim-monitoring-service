@@ -11,9 +11,7 @@ env:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 17
@@ -29,3 +27,22 @@ jobs:
         run: docker build --tag ${{ secrets.USERNAME_HUB }}/$PROJECT_NAME:latest .
       - name: Docker push
         run: docker push ${{ secrets.USERNAME_HUB }}/$PROJECT_NAME:latest
+  deployment:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy
+        uses: 'deliverybot/helm@v1'
+        with:
+          release: $PROJECT_NAME
+          namespace: default
+          chart: helm
+          token: ${{ github.token }}
+          values: |
+            name: helm
+          value-files: [
+            "values.yaml"
+          ]
+        env:
+          KUBECONFIG_FILE: ${{ secrets.KUBECONFIG }}
