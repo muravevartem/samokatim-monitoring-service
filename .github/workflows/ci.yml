@@ -39,4 +39,4 @@ jobs:
           chmod 400 ~/.ssh/id_rsa
       - name: Deploy to server
         run: |
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -A ${{ secrets.BASTION_USER }}@${{ secrets.BASTION_HOST }} 'docker stop monitoring-service; docker rm monitoring-service; docker rmi muravevartem/samokatim-monitoring-service; docker run -d -p 80:80 --name monitoring-service muravevartem/samokatim-monitoring-service:latest'
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -A ${{ secrets.BASTION_USER }}@${{ secrets.BASTION_HOST }} 'docker stop monitoring-service; docker rm monitoring-service; docker rmi muravevartem/samokatim-monitoring-service; docker run -d --name monitoring-service muravevartem/samokatim-monitoring-service:latest'
