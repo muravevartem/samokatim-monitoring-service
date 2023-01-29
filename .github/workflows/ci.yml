@@ -41,8 +41,5 @@ jobs:
           token: ${{ github.token }}
           values: |
             name: helm
-          value-files: [
-            "values.yaml"
-          ]
         env:
           KUBECONFIG_FILE: ${{ secrets.KUBECONFIG }}
