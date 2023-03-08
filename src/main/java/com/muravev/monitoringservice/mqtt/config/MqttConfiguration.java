@@ -1,5 +1,6 @@
 package com.muravev.monitoringservice.mqtt.config;
 
+import com.muravev.monitoringservice.mqtt.service.MqttHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,8 +48,8 @@ public class MqttConfiguration {
 
     @Bean
     @ServiceActivator(inputChannel = "mqttInputChannel")
-    public MessageHandler handler() {
-        return message -> System.out.println(message.getPayload());
+    public MessageHandler handler(List<MqttHandler> handlers) {
+        return message -> handlers.forEach(handler -> handler.handle(message));
     }
 
 }
