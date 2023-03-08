@@ -15,6 +15,8 @@
     <description>Monitoring Service</description>
     <properties>
         <java.version>17</java.version>
+        <org.eclipse.paho.client.mqttv3.version>1.2.5</org.eclipse.paho.client.mqttv3.version>
+        <spring-integration-mqtt.version>6.0.3</spring-integration-mqtt.version>
     </properties>
     <dependencies>
         <dependency>
@@ -60,6 +62,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.integration</groupId>
+            <artifactId>spring-integration-mqtt</artifactId>
+            <version>${spring-integration-mqtt.version}</version>
         </dependency>
         <dependency>
             <groupId>io.projectreactor</groupId>

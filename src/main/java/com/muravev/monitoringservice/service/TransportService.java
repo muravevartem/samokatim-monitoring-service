@@ -1,7 +1,7 @@
-package com.muravev.monitoringservice.services;
+package com.muravev.monitoringservice.service;
 
-import com.muravev.monitoringservice.documents.TransportTimePoint;
-import com.muravev.monitoringservice.models.TransportPoint;
+import com.muravev.monitoringservice.document.TransportTimePoint;
+import com.muravev.monitoringservice.model.TransportPoint;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

@@ -1,6 +1,6 @@
 package com.muravev.monitoringservice.dao;
 
-import com.muravev.monitoringservice.documents.TransportTimePoint;
+import com.muravev.monitoringservice.document.TransportTimePoint;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

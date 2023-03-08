@@ -1,7 +1,6 @@
-package com.muravev.monitoringservice.models;
+package com.muravev.monitoringservice.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.muravev.monitoringservice.enums.TransportType;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

@@ -1,8 +1,8 @@
-package com.muravev.monitoringservice.controllers;
+package com.muravev.monitoringservice.controller;
 
-import com.muravev.monitoringservice.documents.TransportTimePoint;
-import com.muravev.monitoringservice.models.TransportPoint;
-import com.muravev.monitoringservice.services.TransportService;
+import com.muravev.monitoringservice.document.TransportTimePoint;
+import com.muravev.monitoringservice.model.TransportPoint;
+import com.muravev.monitoringservice.service.TransportService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

@@ -1,9 +1,9 @@
-package com.muravev.monitoringservice.services.impl;
+package com.muravev.monitoringservice.service.impl;
 
 import com.muravev.monitoringservice.dao.TransportRepository;
-import com.muravev.monitoringservice.documents.TransportTimePoint;
-import com.muravev.monitoringservice.models.TransportPoint;
-import com.muravev.monitoringservice.services.TransportService;
+import com.muravev.monitoringservice.document.TransportTimePoint;
+import com.muravev.monitoringservice.model.TransportPoint;
+import com.muravev.monitoringservice.service.TransportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;

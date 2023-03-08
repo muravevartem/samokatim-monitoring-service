@@ -1,4 +1,4 @@
-package com.muravev.monitoringservice.enums;
+package com.muravev.monitoringservice.document;
 
 public enum TransportType {
     BICYCLE,
