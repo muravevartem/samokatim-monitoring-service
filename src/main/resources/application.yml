@@ -8,6 +8,12 @@ spring:
       port: 27017
       authentication-database: 'admin'
 
+
 mqtt:
   broker-url: 'tcp://mqtt.eclipseprojects.io:1883'
   topics: 'smkt/geo'
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true

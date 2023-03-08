@@ -1,10 +1,10 @@
-name: CI/CD
+name: Deploy 🌭🥗
 
 on:
   push:
-    branches: [ "master", "develop", "feature/**" ]
+    branches: [ "master", "develop" ]
   pull_request:
-    branches: [ "master", "develop", "feature/**" ]
+    branches: [ "master", "develop" ]
 
 env:
   PROJECT_NAME: samokatim-monitoring-service
@@ -26,6 +26,17 @@ jobs:
       - name: Docker Hub login
         run: docker login --username ${{ secrets.USERNAME_HUB }} --password ${{ secrets.PASSWORD_HUB }}
       - name: Docker build
-        run: docker build --tag ${{ secrets.USERNAME_HUB }}/$PROJECT_NAME:latest .
+        run: docker build --tag ${{ secrets.USERNAME_HUB }}/$PROJECT_NAME:$GITHUB_RUN_NUMBER .
       - name: Docker push
-        run: docker push ${{ secrets.USERNAME_HUB }}/$PROJECT_NAME:latest
+        run: docker push ${{ secrets.USERNAME_HUB }}/$PROJECT_NAME:$GITHUB_RUN_NUMBER
+  deployment:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Helm
+        run: sudo snap install helm --classic
+      - name: Deploy to server
+        run: |
+          echo "${{secrets.KUBECONFIG}}" > ~/kubeconfig
+          helm upgrade --kubeconfig ~/kubeconfig --set image.tag=$GITHUB_RUN_NUMBER -n samokatim-backend monitoring-service helm/

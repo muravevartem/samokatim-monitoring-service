@@ -26,3 +26,7 @@ Content-Type: application/json; charset=utf-8
    "lng": /*longitude*/
 }
 ```
+
+### Фиксация местоположения устройства (MQTT)
+
+* Добавлена интеграция с MQTT-брокером
