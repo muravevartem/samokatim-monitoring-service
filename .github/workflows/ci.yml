@@ -34,11 +34,9 @@ jobs:
     needs: build
     steps:
       - uses: actions/checkout@v3
-      - name: Create SSH key file
-        run: |
-          mkdir ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 400 ~/.ssh/id_rsa
+      - name: Install Helm
+        run: snap install helm --classic
       - name: Deploy to server
         run: |
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -A ${{ secrets.BASTION_USER }}@${{ secrets.BASTION_HOST }} 'microk8s helm upgrade --set image.tag=$GITHUB_RUN_NUMBER -n samokatim-backend monitoring-service helm/'
+          echo ${{secrets.KUBECONFIG}} > ~/.kube/config
+          helm upgrade --set image.tag=$GITHUB_RUN_NUMBER -n samokatim-backend monitoring-service helm/
