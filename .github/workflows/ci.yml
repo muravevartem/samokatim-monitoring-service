@@ -38,5 +38,5 @@ jobs:
         run: sudo snap install helm --classic
       - name: Deploy to server
         run: |
-          echo "${{secrets.KUBECONFIG}}" > ~/.kube/config
-          helm upgrade --set image.tag=$GITHUB_RUN_NUMBER -n samokatim-backend monitoring-service helm/
+          echo "${{secrets.KUBECONFIG}}" > ~/kubeconfig
+          helm upgrade --kubeconfig ~/kubeconfig --set image.tag=$GITHUB_RUN_NUMBER -n samokatim-backend monitoring-service helm/
