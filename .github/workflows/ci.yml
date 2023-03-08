@@ -26,6 +26,19 @@ jobs:
       - name: Docker Hub login
         run: docker login --username ${{ secrets.USERNAME_HUB }} --password ${{ secrets.PASSWORD_HUB }}
       - name: Docker build
-        run: docker build --tag ${{ secrets.USERNAME_HUB }}/$PROJECT_NAME:latest .
+        run: docker build --tag ${{ secrets.USERNAME_HUB }}/$PROJECT_NAME:$GITHUB_RUN_NUMBER .
       - name: Docker push
-        run: docker push ${{ secrets.USERNAME_HUB }}/$PROJECT_NAME:latest
+        run: docker push ${{ secrets.USERNAME_HUB }}/$PROJECT_NAME:$GITHUB_RUN_NUMBER
+#  deployment:
+#    runs-on: ubuntu-latest
+#    needs: build
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: Create SSH key file
+#        run: |
+#          mkdir ~/.ssh
+#          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+#          chmod 400 ~/.ssh/id_rsa
+#      - name: Deploy to server
+#        run: |
+#          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -A ${{ secrets.BASTION_USER }}@${{ secrets.BASTION_HOST }} 'docker-compose pull monitoring-service; docker-compose up --force-recreate -d monitoring-service'
