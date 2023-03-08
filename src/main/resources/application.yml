@@ -1,9 +1,13 @@
 spring:
   data:
     mongodb:
-      username: application
-      password: pwd
-      database: monitoring
-      host: 127.0.0.1
+      username: 'application'
+      password: 'pwd'
+      database: 'monitoring'
+      host: '1218407-cu57808.tw1.ru'
       port: 27017
-      authentication-database: admin
+      authentication-database: 'admin'
+
+mqtt:
+  broker-url: 'tcp://mqtt.eclipseprojects.io:1883'
+  topics: 'smkt/geo'

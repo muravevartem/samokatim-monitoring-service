@@ -1,15 +1,16 @@
-package com.muravev.monitoringservice.services.impl;
+package com.muravev.monitoringservice.service.impl;
 
 import com.muravev.monitoringservice.dao.TransportRepository;
-import com.muravev.monitoringservice.documents.TransportTimePoint;
-import com.muravev.monitoringservice.models.TransportPoint;
-import com.muravev.monitoringservice.services.TransportService;
+import com.muravev.monitoringservice.document.TransportTimePoint;
+import com.muravev.monitoringservice.model.TransportPoint;
+import com.muravev.monitoringservice.service.TransportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Service
@@ -30,7 +31,7 @@ public class TransportServiceImpl implements TransportService {
 
     @Override
     public Mono<TransportTimePoint> savePoint(TransportPoint point) {
-        TransportTimePoint timePoint = new TransportTimePoint()
+        var timePoint = new TransportTimePoint()
                 .setId(UUID.randomUUID())
                 .setTransportId(point.getTransportId())
                 .setLng(point.getLng())
