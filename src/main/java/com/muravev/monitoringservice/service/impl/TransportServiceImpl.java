@@ -31,7 +31,7 @@ public class TransportServiceImpl implements TransportService {
 
     @Override
     public Mono<TransportTimePoint> savePoint(TransportPoint point) {
-        TransportTimePoint timePoint = new TransportTimePoint()
+        var timePoint = new TransportTimePoint()
                 .setId(UUID.randomUUID())
                 .setTransportId(point.getTransportId())
                 .setLng(point.getLng())
