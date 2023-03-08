@@ -1,6 +1,8 @@
 package com.muravev.monitoringservice.mqtt.config;
 
 import com.muravev.monitoringservice.mqtt.service.MqttHandler;
+import com.muravev.monitoringservice.mqtt.service.MqttHandlingManager;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,6 +23,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Configuration
+@RequiredArgsConstructor
 @Slf4j
 public class MqttConfiguration {
     @Value("${mqtt.broker-url}")
@@ -48,16 +51,8 @@ public class MqttConfiguration {
 
     @Bean
     @ServiceActivator(inputChannel = "mqttInputChannel")
-    public MessageHandler handler(List<MqttHandler> handlers) {
-        return message -> handlers.forEach(
-                mqttHandler -> {
-                    try {
-                        mqttHandler.handle(message);
-                    } catch (Exception e) {
-                        log.error("[MQTT] Error", e);
-                    }
-                }
-        );
+    public MessageHandler handler(MqttHandlingManager handlingManager) {
+        return handlingManager::handleMessage;
     }
 
 }
