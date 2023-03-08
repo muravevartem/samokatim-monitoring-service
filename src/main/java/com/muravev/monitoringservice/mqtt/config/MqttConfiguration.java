@@ -29,11 +29,26 @@ public class MqttConfiguration {
     private List<String> topics;
 
     @Bean
-    IntegrationFlow mqttInbound() {
-        return IntegrationFlow.from(
-                new MqttPahoMessageDrivenChannelAdapter(brokerUrl, UUID.randomUUID().toString(), "smkt/geo")
-        )
-                .handle(m -> log.info("[MQTT] Message {}", m.getPayload()))
-                .get();
+    public MessageChannel mqttInputChannel() {
+        return new DirectChannel();
     }
+
+    @Bean
+    public MessageProducer inbound() {
+        MqttPahoMessageDrivenChannelAdapter adapter =
+                new MqttPahoMessageDrivenChannelAdapter(brokerUrl, "testClient",
+                        topics.toArray(new String[0]));
+        adapter.setCompletionTimeout(5000);
+        adapter.setConverter(new DefaultPahoMessageConverter());
+        adapter.setQos(1);
+        adapter.setOutputChannel(mqttInputChannel());
+        return adapter;
+    }
+
+    @Bean
+    @ServiceActivator(inputChannel = "mqttInputChannel")
+    public MessageHandler handler() {
+        return message -> System.out.println(message.getPayload());
+    }
+
 }
