@@ -49,7 +49,15 @@ public class MqttConfiguration {
     @Bean
     @ServiceActivator(inputChannel = "mqttInputChannel")
     public MessageHandler handler(List<MqttHandler> handlers) {
-        return message -> handlers.forEach(handler -> handler.handle(message));
+        return message -> handlers.forEach(
+                mqttHandler -> {
+                    try {
+                        mqttHandler.handle(message);
+                    } catch (Exception e) {
+                        log.error("[MQTT] Error", e);
+                    }
+                }
+        );
     }
 
 }

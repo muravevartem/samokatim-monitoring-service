@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Data
@@ -21,4 +22,10 @@ public class TransportTimePoint {
 
     private LocalDateTime timestamp;
 
+    @Override
+    public String toString() {
+        return "TransportTimePoint{" +
+                "id=" + id +
+                '}';
+    }
 }
