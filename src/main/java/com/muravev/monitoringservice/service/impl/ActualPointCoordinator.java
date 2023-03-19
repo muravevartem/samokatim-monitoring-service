@@ -22,8 +22,11 @@ public class ActualPointCoordinator implements PointCoordinator {
 
     @Override
     public List<EquipmentPointResponse> getActualGeolocations(MapViewRequest viewRequest) {
+
         var northEast = viewRequest.getNorthEast();
         var southWest = viewRequest.getSouthWest();
+        log.info("[GEO] getting location ne-lat: {} ne-lng: {} sw-lat: {} sw-lng: {}",
+                northEast.getLat(), northEast.getLng(), southWest.getLat(), southWest.getLng());
         var equipments = currentGeopositionRepository.findAllBySearchPerimeter(
                 northEast.getLat(),
                 northEast.getLng(),
