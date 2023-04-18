@@ -8,13 +8,11 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: update
-
-
-mqtt:
-  broker-url: 'tcp://mqtt.eclipseprojects.io:1883'
-  topics: 'smkt/geo'
 management:
   endpoint:
     health:
       probes:
         enabled: true
+mqtt:
+  broker-url: 'tcp://mqtt.eclipseprojects.io:1883'
+  topics: 'smkt/geo'

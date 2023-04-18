@@ -1,6 +1,5 @@
 spring:
-  data:
-    mongodb:
-      host: 'localhost'
+  datasource:
+    url: 'jdbc:postgresql://localhost:5432/app'
 server:
   port: 8081
