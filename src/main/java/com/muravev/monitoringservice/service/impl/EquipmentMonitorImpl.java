@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class EquipmentMonitorImpl implements EquipmentMonitor {
     private final GeoEquipmentRepository equipmentRepository;
-    private final EquipmentGeoTrackRepository trackRepository;
     private final GeolocationMapper geolocationMapper;
 
 
@@ -32,6 +31,7 @@ public class EquipmentMonitorImpl implements EquipmentMonitor {
                 .orElse(source);
         GeoPoint point = geolocationMapper.toTrackPoint(geolocationRequest);
         currentGeolocationForSave.addPoint(point);
+        log.info("New point lat:{} lng:{}", point.getLat(), point.getLng());
         var savedGeolocation = equipmentRepository.save(currentGeolocationForSave);
         return geolocationMapper.toGeolocationResponse(savedGeolocation);
     }

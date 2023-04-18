@@ -13,7 +13,9 @@ public class WebConfiguration implements WebMvcConfigurer {
                 .allowedOrigins(
                         "http://localhost:3000",
                         "https://admin.1304294-cu57808.tw1.ru",
-                        "http://admin.1304294-cu57808.tw1.ru/"
+                        "http://admin.1304294-cu57808.tw1.ru/",
+                        "http://1304294-cu57808.tw1.ru",
+                        "https://1304294-cu57808.tw1.ru"
                 )
                 .allowedHeaders("*")
                 .allowCredentials(true);
