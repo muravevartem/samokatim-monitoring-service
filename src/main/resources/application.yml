@@ -2,12 +2,15 @@ spring:
   datasource:
     username: 'app'
     password: '123456'
-    url: 'jdbc:postgresql://1349291-cu57808.tw1.ru:5432/monotordb'
+    url: 'jdbc:postgresql://1349291-cu57808.tw1.ru:5432/monitordb'
     driver-class-name: org.postgresql.Driver
   jpa:
     generate-ddl: true
     hibernate:
       ddl-auto: update
+    properties:
+      hibernate:
+        dialect: 'org.hibernate.dialect.PostgreSQLDialect'
 management:
   endpoint:
     health:

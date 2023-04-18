@@ -23,9 +23,6 @@ public class GeoPoint {
     private Long id;
 
     @Column(nullable = false)
-    private long equipmentId;
-
-    @Column(nullable = false)
     private double lat;
 
     @Column(nullable = false)
@@ -34,7 +31,8 @@ public class GeoPoint {
     @CreatedDate
     private OffsetDateTime createdDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "equipment_id", nullable = false)
     private GeoEquipment equipment;
 
 

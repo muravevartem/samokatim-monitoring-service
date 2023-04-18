@@ -29,7 +29,7 @@ public class GeoEquipment {
     @Column(nullable = false)
     private double lng;
 
-    @OneToMany(mappedBy = "equipment")
+    @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL)
     @OrderBy("createdDate DESC")
     private List<GeoPoint> points = new ArrayList<>();
 

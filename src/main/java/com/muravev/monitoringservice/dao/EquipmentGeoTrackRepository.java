@@ -15,7 +15,7 @@ public interface EquipmentGeoTrackRepository extends JpaRepository<GeoPoint, Lon
 
     @Query("""
             SELECT point FROM GeoPoint point
-            WHERE point.equipmentId = :equipmentId
+            WHERE point.equipment.id = :equipmentId
                     AND point.createdDate BETWEEN :start AND :end
             """)
     List<GeoPoint> findAllByTransportId(Long equipmentId,
