@@ -8,9 +8,9 @@ import java.util.UUID;
 
 @Data
 public class EquipmentTrackResponse {
-    private UUID id;
-    private Long transportId;
+    private Long id;
+    private Long equipmentId;
     private Double lat;
     private Double lng;
-    private LocalDateTime addedAt;
+    private LocalDateTime createdAt;
 }

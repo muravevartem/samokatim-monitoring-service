@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class EquipmentPointResponse {
-    private Long transportId;
+    private Long equipmentId;
     private Double lat;
     private Double lng;
 }

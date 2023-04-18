@@ -34,7 +34,7 @@ public class GeolocationMqttHandler implements MqttHandler {
         }
 
         var geoPoint = new EquipmentGeolocationRequest()
-                .setTransportId(Long.parseLong(splitMessage[GeolocationMessageStructure.CLIENT_ID.ordinal()]))
+                .setEquipmentId(Long.parseLong(splitMessage[GeolocationMessageStructure.CLIENT_ID.ordinal()]))
                 .setLng(Double.parseDouble(splitMessage[GeolocationMessageStructure.LNG.ordinal()]))
                 .setLat(Double.parseDouble(splitMessage[GeolocationMessageStructure.LAT.ordinal()]));
 

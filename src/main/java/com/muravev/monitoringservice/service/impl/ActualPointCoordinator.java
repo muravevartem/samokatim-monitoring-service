@@ -1,6 +1,6 @@
 package com.muravev.monitoringservice.service.impl;
 
-import com.muravev.monitoringservice.dao.EquipmentCurrentGeopositionRepository;
+import com.muravev.monitoringservice.dao.GeoEquipmentRepository;
 import com.muravev.monitoringservice.mapper.GeolocationMapper;
 import com.muravev.monitoringservice.model.request.MapViewRequest;
 import com.muravev.monitoringservice.model.response.EquipmentPointResponse;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class ActualPointCoordinator implements PointCoordinator {
-    private final EquipmentCurrentGeopositionRepository currentGeopositionRepository;
+    private final GeoEquipmentRepository equipmentRepository;
     private final GeolocationMapper geolocationMapper;
 
 
@@ -27,7 +27,7 @@ public class ActualPointCoordinator implements PointCoordinator {
         var southWest = viewRequest.getSouthWest();
         log.info("[GEO] getting location ne-lat: {} ne-lng: {} sw-lat: {} sw-lng: {}",
                 northEast.getLat(), northEast.getLng(), southWest.getLat(), southWest.getLng());
-        var equipments = currentGeopositionRepository.findAllBySearchPerimeter(
+        var equipments = equipmentRepository.findAllBySearchPerimeter(
                 northEast.getLat(),
                 northEast.getLng(),
                 southWest.getLat(),

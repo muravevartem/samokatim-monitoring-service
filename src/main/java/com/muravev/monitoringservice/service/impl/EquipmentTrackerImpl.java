@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +21,7 @@ public class EquipmentTrackerImpl implements EquipmentTracker {
     private final GeolocationMapper geolocationMapper;
 
     @Override
-    public List<EquipmentTrackResponse> getByEquipment(long equipmentId, LocalDateTime start, LocalDateTime end) {
+    public List<EquipmentTrackResponse> getByEquipment(long equipmentId, OffsetDateTime start, OffsetDateTime end) {
         var track = trackRepository.findAllByTransportId(equipmentId,
                 start,
                 end,

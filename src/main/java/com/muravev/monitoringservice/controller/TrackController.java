@@ -33,6 +33,6 @@ public class TrackController {
                                                        @RequestParam OffsetDateTime start,
                                                        @DateTimeFormat(iso= DateTimeFormat.ISO.DATE_TIME)
                                                        @RequestParam OffsetDateTime end) {
-        return tracker.getByEquipment(tId, start.toLocalDateTime(), end.toLocalDateTime());
+        return tracker.getByEquipment(tId, start, end);
     }
 }
