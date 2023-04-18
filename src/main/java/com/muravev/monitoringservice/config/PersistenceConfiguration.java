@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.auditing.DateTimeProvider;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
+import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 
@@ -13,6 +14,6 @@ import java.util.Optional;
 public class PersistenceConfiguration {
     @Bean
     public DateTimeProvider auditingDateTimeProvider() {
-        return  () -> Optional.of(ZonedDateTime.now());
+        return  () -> Optional.of(OffsetDateTime.now());
     }
 }
