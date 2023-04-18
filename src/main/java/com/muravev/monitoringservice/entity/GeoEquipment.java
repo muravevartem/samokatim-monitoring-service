@@ -33,6 +33,13 @@ public class GeoEquipment {
     @OrderBy("createdDate DESC")
     private List<GeoPoint> points = new ArrayList<>();
 
+    public void addPoint(GeoPoint point) {
+        if (point != null) {
+            this.points.add(point);
+            point.setEquipment(this);
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

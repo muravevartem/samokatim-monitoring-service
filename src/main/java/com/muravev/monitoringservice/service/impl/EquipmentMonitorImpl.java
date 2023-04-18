@@ -2,6 +2,8 @@ package com.muravev.monitoringservice.service.impl;
 
 import com.muravev.monitoringservice.dao.GeoEquipmentRepository;
 import com.muravev.monitoringservice.dao.EquipmentGeoTrackRepository;
+import com.muravev.monitoringservice.entity.GeoEquipment;
+import com.muravev.monitoringservice.entity.GeoPoint;
 import com.muravev.monitoringservice.mapper.GeolocationMapper;
 import com.muravev.monitoringservice.model.request.EquipmentGeolocationRequest;
 import com.muravev.monitoringservice.model.response.EquipmentPointResponse;
@@ -24,19 +26,14 @@ public class EquipmentMonitorImpl implements EquipmentMonitor {
     @Override
     @Transactional
     public EquipmentPointResponse saveGeolocation(EquipmentGeolocationRequest geolocationRequest) {
-        var source = geolocationMapper.toCurrentLocation(geolocationRequest);
-        var currentGeolocationForSave = equipmentRepository.findByEquipmentId(source.getEquipmentId())
+        GeoEquipment source = geolocationMapper.toCurrentLocation(geolocationRequest);
+        GeoEquipment currentGeolocationForSave = equipmentRepository.findByEquipmentId(source.getEquipmentId())
                 .map(target -> geolocationMapper.merge(target, source))
                 .orElse(source);
+        GeoPoint point = geolocationMapper.toTrackPoint(geolocationRequest);
+        currentGeolocationForSave.addPoint(point);
         var savedGeolocation = equipmentRepository.save(currentGeolocationForSave);
-        saveTrackPoint(geolocationRequest);
         return geolocationMapper.toGeolocationResponse(savedGeolocation);
-    }
-
-    private void saveTrackPoint(EquipmentGeolocationRequest geolocationRequest) {
-        var point = geolocationMapper.toTrackPoint(geolocationRequest);
-        trackRepository.save(point);
-        log.info("Saved track point for equipment {}", geolocationRequest.getEquipmentId());
     }
 
 }
