@@ -12,9 +12,9 @@ public interface GeoEquipmentRepository extends JpaRepository<GeoEquipment, Long
 
     @Query("""
             SELECT equipment FROM GeoEquipment equipment
-            WHERE equipment.lng BETWEEN :lngNE AND :lngSW
+            WHERE equipment.lng BETWEEN :lngSW AND :lngNE
                 AND
-                equipment.lat BETWEEN :latNE AND :latSW
+                equipment.lat BETWEEN :latSW AND :latNE
             ORDER BY equipment.equipmentId DESC
             """)
     List<GeoEquipment> findAllBySearchPerimeter(@Param("latNE") double latNE,
