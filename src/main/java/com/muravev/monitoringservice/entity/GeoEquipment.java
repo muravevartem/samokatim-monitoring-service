@@ -19,7 +19,7 @@ public class GeoEquipment implements Persistable<Long> {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EquipmentStatus status;
 
