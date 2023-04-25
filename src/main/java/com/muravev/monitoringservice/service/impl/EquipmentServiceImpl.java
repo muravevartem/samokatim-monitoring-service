@@ -21,6 +21,7 @@ public class EquipmentServiceImpl implements EquipmentService {
         GeoEquipment geoEquipment = new GeoEquipment();
         geoEquipment.setId(equipmentId);
         geoEquipment.setNew(true);
+        geoEquipment.setStatus(EquipmentStatus.WAITING);
         equipmentRepository.save(geoEquipment);
     }
 
