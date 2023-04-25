@@ -24,14 +24,14 @@ public class EquipmentMonitorImpl implements EquipmentMonitor {
     @Override
     @Transactional
     public EquipmentPointResponse saveGeolocation(EquipmentGeolocationRequest geolocationRequest) {
-        GeoEquipment source = geolocationMapper.toCurrentLocation(geolocationRequest);
-        GeoEquipment currentGeolocationForSave = equipmentRepository.findById(source.getId())
-                .map(target -> geolocationMapper.merge(target, source))
-                .orElse(source);
+        GeoEquipment equipment = equipmentRepository.findById(geolocationRequest.getId())
+                .orElseThrow(() -> new IllegalArgumentException(""));
+        equipment.setLat(geolocationRequest.getLat());
+        equipment.setLng(geolocationRequest.getLng());
         GeoPoint point = geolocationMapper.toTrackPoint(geolocationRequest);
-        currentGeolocationForSave.addPoint(point);
+        equipment.addPoint(point);
         log.info("New point lat:{} lng:{}", point.getLat(), point.getLng());
-        var savedGeolocation = equipmentRepository.save(currentGeolocationForSave);
+        var savedGeolocation = equipmentRepository.save(equipment);
         return geolocationMapper.toGeolocationResponse(savedGeolocation);
     }
 

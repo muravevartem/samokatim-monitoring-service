@@ -33,10 +33,11 @@ public class GeolocationMqttHandler implements MqttHandler {
             return;
         }
 
-        var geoPoint = new EquipmentGeolocationRequest()
-                .setId(Long.parseLong(splitMessage[GeolocationMessageStructure.CLIENT_ID.ordinal()]))
-                .setLng(Double.parseDouble(splitMessage[GeolocationMessageStructure.LNG.ordinal()]))
-                .setLat(Double.parseDouble(splitMessage[GeolocationMessageStructure.LAT.ordinal()]));
+        var geoPoint = EquipmentGeolocationRequest.builder()
+                .id(Long.parseLong(splitMessage[GeolocationMessageStructure.CLIENT_ID.ordinal()]))
+                .lng(Double.parseDouble(splitMessage[GeolocationMessageStructure.LNG.ordinal()]))
+                .lat(Double.parseDouble(splitMessage[GeolocationMessageStructure.LAT.ordinal()]))
+                .build();
 
         var savedPoint = monitor.saveGeolocation(geoPoint);
 
