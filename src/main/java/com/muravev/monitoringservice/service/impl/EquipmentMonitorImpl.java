@@ -1,7 +1,6 @@
 package com.muravev.monitoringservice.service.impl;
 
 import com.muravev.monitoringservice.dao.GeoEquipmentRepository;
-import com.muravev.monitoringservice.dao.EquipmentGeoTrackRepository;
 import com.muravev.monitoringservice.entity.GeoEquipment;
 import com.muravev.monitoringservice.entity.GeoPoint;
 import com.muravev.monitoringservice.mapper.GeolocationMapper;
@@ -26,7 +25,7 @@ public class EquipmentMonitorImpl implements EquipmentMonitor {
     @Transactional
     public EquipmentPointResponse saveGeolocation(EquipmentGeolocationRequest geolocationRequest) {
         GeoEquipment source = geolocationMapper.toCurrentLocation(geolocationRequest);
-        GeoEquipment currentGeolocationForSave = equipmentRepository.findByEquipmentId(source.getEquipmentId())
+        GeoEquipment currentGeolocationForSave = equipmentRepository.findById(source.getId())
                 .map(target -> geolocationMapper.merge(target, source))
                 .orElse(source);
         GeoPoint point = geolocationMapper.toTrackPoint(geolocationRequest);

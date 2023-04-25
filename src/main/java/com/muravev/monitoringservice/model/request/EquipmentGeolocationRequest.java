@@ -8,7 +8,7 @@ import lombok.Data;
 public class EquipmentGeolocationRequest {
     @NotNull
     @Positive
-    private Long equipmentId;
+    private Long id;
     @NotNull
     private Double lat;
 
