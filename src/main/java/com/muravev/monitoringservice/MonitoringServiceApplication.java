@@ -2,11 +2,10 @@ package com.muravev.monitoringservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-import java.util.Arrays;
-import java.util.TimeZone;
 
+@EnableDiscoveryClient
 @SpringBootApplication
 public class MonitoringServiceApplication {
 
