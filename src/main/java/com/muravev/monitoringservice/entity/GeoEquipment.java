@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.Hibernate;
+import org.springframework.data.domain.Persistable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,15 +14,14 @@ import java.util.Objects;
 @Table(name = "current_geo_point")
 @Getter
 @Setter
-public class GeoEquipment {
+public class GeoEquipment implements Persistable<Long> {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "current_geo_point_gen")
-    @SequenceGenerator(name = "current_geo_point_gen", sequenceName = "current_geo_point_seq", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private long equipmentId;
+    @Enumerated
+    @Column(nullable = false)
+    private EquipmentStatus status;
 
     @Column(nullable = false)
     private double lat;
@@ -32,6 +32,9 @@ public class GeoEquipment {
     @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL)
     @OrderBy("createdDate DESC")
     private List<GeoPoint> points = new ArrayList<>();
+
+    @Transient
+    private boolean isNew;
 
     public void addPoint(GeoPoint point) {
         if (point != null) {

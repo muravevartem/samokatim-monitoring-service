@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface GeoEquipmentRepository extends JpaRepository<GeoEquipment, Long> {
 
@@ -15,12 +14,11 @@ public interface GeoEquipmentRepository extends JpaRepository<GeoEquipment, Long
             WHERE equipment.lng BETWEEN :lngSW AND :lngNE
                 AND
                 equipment.lat BETWEEN :latSW AND :latNE
-            ORDER BY equipment.equipmentId DESC
+            ORDER BY equipment.id DESC
             """)
     List<GeoEquipment> findAllBySearchPerimeter(@Param("latNE") double latNE,
                                             @Param("lngNE") double lngNE,
                                             @Param("latSW") double latSW,
                                             @Param("lngSW") double lngSW);
 
-    Optional<GeoEquipment> findByEquipmentId(long equipmentId);
 }

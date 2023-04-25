@@ -1,0 +1,11 @@
+{
+  "namespace": "com.muravev.samokatimmessage",
+  "type": "record",
+  "name": "ReleasedEquipmentMessage",
+  "fields": [
+    {
+      "name": "id",
+      "type": "long"
+    }
+  ]
+}
