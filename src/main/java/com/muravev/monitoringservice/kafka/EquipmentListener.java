@@ -7,35 +7,29 @@ import com.muravev.samokatimmessage.RegisteredEquipmentMessage;
 import com.muravev.samokatimmessage.ReleasedEquipmentMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 @Service
-@KafkaListener(topics = TopicName.EQUIPMENT_TOPIC)
 @RequiredArgsConstructor
 @Slf4j
 public class EquipmentListener {
     private final EquipmentService equipmentService;
 
 
-    @KafkaHandler
+    @KafkaListener(topics = TopicName.REGISTERED_EQUIPMENT_TOPIC)
     public void listen(RegisteredEquipmentMessage message) {
         equipmentService.importNewEquipment(message.getId());
     }
 
-    @KafkaHandler
+    @KafkaListener(topics = TopicName.BOOKED_EQUIPMENT_TOPIC)
     public void listen(BookedEquipmentMessage message) {
         equipmentService.changeStatus(message.getId(), EquipmentStatus.USED);
     }
 
-    @KafkaHandler
+    @KafkaListener(topics = TopicName.RELEASED_EQUIPMENT_TOPIC)
     public void listen(ReleasedEquipmentMessage message) {
         equipmentService.changeStatus(message.getId(), EquipmentStatus.WAITING);
     }
 
-    @KafkaHandler(isDefault = true)
-    public void listen(Object object) {
-        log.warn("Unknown message type");
-    }
 }
