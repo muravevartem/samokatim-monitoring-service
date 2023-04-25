@@ -7,7 +7,7 @@ import org.hibernate.Hibernate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
 @Entity
@@ -29,7 +29,7 @@ public class GeoPoint {
     private double lng;
 
     @CreatedDate
-    private OffsetDateTime createdDate;
+    private ZonedDateTime createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "equipment_id", nullable = false)

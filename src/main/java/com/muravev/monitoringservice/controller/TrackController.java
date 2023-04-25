@@ -10,8 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @RestController
@@ -30,9 +29,9 @@ public class TrackController {
     @GetMapping
     public List<EquipmentTrackResponse> getByEquipment(@RequestParam Long tId,
                                                        @DateTimeFormat(iso= DateTimeFormat.ISO.DATE_TIME)
-                                                       @RequestParam OffsetDateTime start,
+                                                       @RequestParam ZonedDateTime start,
                                                        @DateTimeFormat(iso= DateTimeFormat.ISO.DATE_TIME)
-                                                       @RequestParam OffsetDateTime end) {
+                                                       @RequestParam ZonedDateTime end) {
         return tracker.getByEquipment(tId, start, end);
     }
 }

@@ -1,0 +1,27 @@
+{
+  "namespace": "com.muravev.samokatimmessage",
+  "type": "record",
+  "name": "CompletedRentMessage",
+  "fields": [
+    {
+      "name": "rentId",
+      "type": "long"
+    },
+    {
+      "name": "equipmentId",
+      "type": "long"
+    },
+    {
+      "name": "user",
+      "type": "string"
+    },
+    {
+      "name": "startTime",
+      "type": "string"
+    },
+    {
+      "name": "endTime",
+      "type": "string"
+    }
+  ]
+}

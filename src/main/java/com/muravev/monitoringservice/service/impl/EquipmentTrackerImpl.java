@@ -6,10 +6,10 @@ import com.muravev.monitoringservice.model.response.EquipmentTrackResponse;
 import com.muravev.monitoringservice.service.EquipmentTracker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,11 +21,11 @@ public class EquipmentTrackerImpl implements EquipmentTracker {
     private final GeolocationMapper geolocationMapper;
 
     @Override
-    public List<EquipmentTrackResponse> getByEquipment(long equipmentId, OffsetDateTime start, OffsetDateTime end) {
-        var track = trackRepository.findAllByTransportId(equipmentId,
+    @Transactional(readOnly = true)
+    public List<EquipmentTrackResponse> getByEquipment(long equipmentId, ZonedDateTime start, ZonedDateTime end) {
+        var track = trackRepository.findAllById(equipmentId,
                 start,
-                end,
-                Sort.by("addedAt").descending()
+                end
         );
         return track.stream()
                 .map(geolocationMapper::toGeolocationResponse)

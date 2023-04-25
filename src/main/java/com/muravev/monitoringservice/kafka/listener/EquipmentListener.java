@@ -1,6 +1,7 @@
-package com.muravev.monitoringservice.kafka;
+package com.muravev.monitoringservice.kafka.listener;
 
 import com.muravev.monitoringservice.entity.EquipmentStatus;
+import com.muravev.monitoringservice.kafka.TopicName;
 import com.muravev.monitoringservice.service.EquipmentService;
 import com.muravev.samokatimmessage.BookedEquipmentMessage;
 import com.muravev.samokatimmessage.RegisteredEquipmentMessage;

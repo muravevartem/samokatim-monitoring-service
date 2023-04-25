@@ -1,0 +1,39 @@
+[
+  {
+    "namespace": "com.muravev.samokatimmessage",
+    "type": "record",
+    "name": "CompletedTrackItem",
+    "fields": [
+      {
+        "name": "lat",
+        "type": "double"
+      },
+      {
+        "name": "lng",
+        "type": "double"
+      },
+      {
+        "name": "time",
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "namespace": "com.muravev.samokatimmessage",
+    "type": "record",
+    "name": "CompletedTrackMessage",
+    "fields": [
+      {
+        "name": "rentId",
+        "type": "long"
+      },
+      {
+        "name": "track",
+        "type": {
+          "type": "array",
+          "items": "com.muravev.samokatimmessage.CompletedTrackItem"
+        }
+      }
+    ]
+  }
+]
