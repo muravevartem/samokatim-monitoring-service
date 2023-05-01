@@ -21,7 +21,7 @@ public class PointController {
         return actualPointCoordinator.getActualGeolocations(request);
     }
 
-    @GetMapping("/${id}")
+    @GetMapping("/{id}")
     public EquipmentPointResponse getActualPoint(@PathVariable long id) {
         return actualPointCoordinator.getActualGeolocation(id);
     }
