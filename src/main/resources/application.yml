@@ -18,7 +18,7 @@ spring:
       discovery:
         all-namespaces: false
   kafka:
-    bootstrap-servers: '1349291-cu57808.tw1.ru:29092,1349291-cu57808.tw1.ru:29093'
+    bootstrap-servers: '1349291-cu57808.tw1.ru:19092,1349291-cu57808.tw1.ru:29092'
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
