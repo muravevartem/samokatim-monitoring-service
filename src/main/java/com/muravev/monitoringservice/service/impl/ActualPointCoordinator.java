@@ -1,6 +1,9 @@
 package com.muravev.monitoringservice.service.impl;
 
 import com.muravev.monitoringservice.dao.GeoEquipmentRepository;
+import com.muravev.monitoringservice.entity.GeoEquipment;
+import com.muravev.monitoringservice.error.ApiException;
+import com.muravev.monitoringservice.error.StatusCode;
 import com.muravev.monitoringservice.mapper.GeolocationMapper;
 import com.muravev.monitoringservice.model.request.MapViewRequest;
 import com.muravev.monitoringservice.model.response.EquipmentPointResponse;
@@ -8,6 +11,7 @@ import com.muravev.monitoringservice.service.PointCoordinator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +25,7 @@ public class ActualPointCoordinator implements PointCoordinator {
 
 
     @Override
+    @Transactional(readOnly = true)
     public List<EquipmentPointResponse> getActualGeolocations(MapViewRequest viewRequest) {
 
         var northEast = viewRequest.getNorthEast();
@@ -36,5 +41,13 @@ public class ActualPointCoordinator implements PointCoordinator {
         return equipments.stream()
                 .map(geolocationMapper::toGeolocationResponse)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public EquipmentPointResponse getActualGeolocation(long id) {
+        GeoEquipment geoEquipment = equipmentRepository.findById(id)
+                .orElseThrow(() -> new ApiException(StatusCode.EQUIPMENT_NOT_FOUND));
+        return geolocationMapper.toGeolocationResponse(geoEquipment);
     }
 }

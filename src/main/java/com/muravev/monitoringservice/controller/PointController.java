@@ -20,4 +20,9 @@ public class PointController {
     public List<EquipmentPointResponse> getActualGeoLocations(@Valid @RequestBody MapViewRequest request) {
         return actualPointCoordinator.getActualGeolocations(request);
     }
+
+    @GetMapping("/${id}")
+    public EquipmentPointResponse getActualPoint(@PathVariable long id) {
+        return actualPointCoordinator.getActualGeolocation(id);
+    }
 }

@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface PointCoordinator {
     List<EquipmentPointResponse> getActualGeolocations(MapViewRequest viewRequest);
+
+    EquipmentPointResponse getActualGeolocation(long id);
 }
