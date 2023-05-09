@@ -12,11 +12,7 @@ public enum StatusCode {
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Внутренняя ошибка сервера"),
     VALIDATION_ERROR(HttpStatus.BAD_REQUEST, "Ошибка валидации"),
 
-    /* Employee */
-    EMPLOYEE_NOT_FOUND(HttpStatus.NOT_FOUND, "Работник не найден"),
-
-    /* Equipment */
-    EQUIPMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "Оборудование не найдено"),
+    TOPIC_NOT_FOUND(HttpStatus.NOT_FOUND, "Топик не найден"),
     ;
 
     private final HttpStatus httpStatus;

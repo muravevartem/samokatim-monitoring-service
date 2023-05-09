@@ -1,11 +1,15 @@
 package com.muravev.monitoringservice.mqtt.service;
 
-import com.muravev.monitoringservice.model.response.MqttTopicResponse;
+import com.muravev.monitoringservice.entity.MqttTopicEntity;
 
 import java.util.List;
 
 public interface MqttTopicRegistrar {
-    void registerTopic(String topicName);
+    void registerTopic(long orgId, String topicName);
 
-    List<MqttTopicResponse> getTopics();
+    void unregisterTopic(long orgId, String topicName);
+
+    void unregisterTopic(String topicId);
+
+    List<MqttTopicEntity> getTopics(long orgId);
 }

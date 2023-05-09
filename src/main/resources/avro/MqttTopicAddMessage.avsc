@@ -1,14 +1,14 @@
 {
   "namespace": "com.muravev.samokatimmessage",
   "type": "record",
-  "name": "RegisteredEquipmentMessage",
+  "name": "MqttTopicAddMessage",
   "fields": [
     {
-      "name": "id",
+      "name": "organizationId",
       "type": "long"
     },
     {
-      "name": "name",
+      "name": "topicName",
       "type": "string"
     }
   ]

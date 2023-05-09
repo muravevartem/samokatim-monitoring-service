@@ -1,7 +1,9 @@
 package com.muravev.monitoringservice.mqtt.config;
 
+import com.muravev.monitoringservice.entity.MqttTopicEntity;
 import com.muravev.monitoringservice.mqtt.service.MqttHandler;
 import com.muravev.monitoringservice.mqtt.service.MqttHandlingManager;
+import com.muravev.monitoringservice.rep.MqttTopicRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,11 +28,16 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Slf4j
 public class MqttConfiguration {
+
+    private final MqttTopicRepository topicRepository;
+
+
     @Value("${mqtt.broker-url}")
     private String brokerUrl;
 
-    @Value("${mqtt.topics}")
-    private List<String> topics;
+    @Value("${mqtt.client-id}")
+    private String clientId;
+
 
     @Bean
     public MessageChannel mqttInputChannel() {
@@ -39,9 +46,11 @@ public class MqttConfiguration {
 
     @Bean
     public MqttPahoMessageDrivenChannelAdapter inbound() {
+        String[] topics = topicRepository.findAll().stream()
+                .map(MqttTopicEntity::getName)
+                .toArray(String[]::new);
         MqttPahoMessageDrivenChannelAdapter adapter =
-                new MqttPahoMessageDrivenChannelAdapter(brokerUrl, "testClient",
-                        topics.toArray(new String[0]));
+                new MqttPahoMessageDrivenChannelAdapter(brokerUrl, clientId, topics);
         adapter.setAutoStartup(true);
         adapter.setCompletionTimeout(5000);
         adapter.setConverter(new DefaultPahoMessageConverter());

@@ -1,8 +1,11 @@
 package com.muravev.monitoringservice.mqtt.service.impl;
 
-enum GeolocationMessageStructure {
+enum MessageStructure {
     TYPE,
     CLIENT_ID,
+    SATELLITES,
     LAT,
-    LNG
+    LNG,
+    SPEED,
+    ALTITUDE
 }

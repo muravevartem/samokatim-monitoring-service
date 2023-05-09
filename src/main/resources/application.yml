@@ -4,7 +4,7 @@ spring:
   datasource:
     username: 'app'
     password: '123456'
-    url: 'jdbc:postgresql://1349291-cu57808.tw1.ru:5432/monitordb'
+    url: 'jdbc:postgresql://1349291-cu57808.tw1.ru:5432/mqttdb'
     driver-class-name: org.postgresql.Driver
   jpa:
     generate-ddl: true
@@ -18,7 +18,7 @@ spring:
       discovery:
         all-namespaces: false
   kafka:
-    bootstrap-servers: '1349291-cu57808.tw1.ru:19092,1349291-cu57808.tw1.ru:29092'
+    bootstrap-servers: '1349291-cu57808.tw1.ru:29092'
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
@@ -37,4 +37,4 @@ management:
         enabled: true
 mqtt:
   broker-url: 'tcp://mqtt.eclipseprojects.io:1883'
-  topics: 'smkt/geo'
+  client-id: 'smkt-app-client'

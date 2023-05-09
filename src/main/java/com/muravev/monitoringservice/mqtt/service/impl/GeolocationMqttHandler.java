@@ -1,31 +1,35 @@
 package com.muravev.monitoringservice.mqtt.service.impl;
 
-import com.muravev.monitoringservice.model.request.EquipmentGeolocationRequest;
+import com.muravev.monitoringservice.kafka.producer.InventoryMetricProducer;
 import com.muravev.monitoringservice.mqtt.service.MqttHandler;
-import com.muravev.monitoringservice.service.EquipmentMonitor;
+import com.muravev.samokatimmessage.GeoPointReceivedMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.messaging.Message;
 import org.springframework.stereotype.Service;
+
+import java.time.ZonedDateTime;
+import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class GeolocationMqttHandler implements MqttHandler {
-    private final EquipmentMonitor monitor;
+    private final InventoryMetricProducer metricProducer;
 
 
     @Override
     public void handle(Message<?> message) {
-        var geoMessage = String.valueOf(message.getPayload());
+        String geoMessage = String.valueOf(message.getPayload());
 
         String[] splitMessage = geoMessage.split(";");
-        if (splitMessage.length != GeolocationMessageStructure.values().length) {
+        if (splitMessage.length != MessageStructure.values().length) {
             log.warn("[MQTT-GEO] Invalid message");
             return;
         }
 
-        var messageType = MqttMessageType.fromString(splitMessage[0])
+        MqttMessageType messageType = MqttMessageType.fromString(splitMessage[MessageStructure.TYPE.ordinal()])
                 .orElse(null);
 
         if (messageType != MqttMessageType.GEO) {
@@ -33,16 +37,39 @@ public class GeolocationMqttHandler implements MqttHandler {
             return;
         }
 
-        var geoPoint = EquipmentGeolocationRequest.builder()
-                .id(Long.parseLong(splitMessage[GeolocationMessageStructure.CLIENT_ID.ordinal()]))
-                .lng(Double.parseDouble(splitMessage[GeolocationMessageStructure.LNG.ordinal()]))
-                .lat(Double.parseDouble(splitMessage[GeolocationMessageStructure.LAT.ordinal()]))
+        Long clientId = getValueOrNull(splitMessage, MessageStructure.CLIENT_ID, Long::parseLong);
+        assert clientId != null;
+
+        Integer satellites = getValueOrNull(splitMessage, MessageStructure.SATELLITES, Integer::parseInt);
+        Double lat = getValueOrNull(splitMessage, MessageStructure.LAT, Double::parseDouble);
+        Double lng = getValueOrNull(splitMessage, MessageStructure.LNG, Double::parseDouble);
+        Double speed = getValueOrNull(splitMessage, MessageStructure.SPEED, Double::parseDouble);
+        Double altitude = getValueOrNull(splitMessage, MessageStructure.ALTITUDE, Double::parseDouble);
+
+        log.info("Registered new geolocation: client-{} lat-{} lng-{} satellise-{} speed-{}",
+                clientId, lat, lng, satellites, speed);
+
+        GeoPointReceivedMessage kafkaMessage = GeoPointReceivedMessage.newBuilder()
+                .setInventoryId(clientId)
+                .setSatellites(satellites != null ? satellites : 0)
+                .setLat(lat)
+                .setLng(lng)
+                .setSpeed(speed)
+                .setAltitude(altitude)
+                .setTimestamp(ZonedDateTime.now().toInstant().getEpochSecond())
                 .build();
 
-        var savedPoint = monitor.saveGeolocation(geoPoint);
+        metricProducer.sendMetric(kafkaMessage);
+    }
 
-        log.info("[MQTT-GEO] Saved point lat:{} lng:{}", savedPoint.getLat(), savedPoint.getLng());
+    private <T> T getValueOrNull(String[] message, MessageStructure structure, Function<String, T> mapper) {
+        if (structure.ordinal() >= message.length)
+            return null;
 
+        String item = message[structure.ordinal()];
+        if (StringUtils.isEmpty(item))
+            return null;
 
+        return mapper.apply(item);
     }
 }
