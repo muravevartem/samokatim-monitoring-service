@@ -39,4 +39,4 @@ jobs:
       - name: Deploy to server
         run: |
           echo "${{secrets.KUBECONFIG}}" > ~/kubeconfig
-          helm upgrade --kubeconfig ~/kubeconfig --set image.tag=$GITHUB_RUN_NUMBER -n samokatim-backend monitoring-service helm/
+          helm upgrade --kubeconfig ~/kubeconfig --set image.tag=$GITHUB_RUN_NUMBER -n samokatim-backend samokatim-monitoring helm/
