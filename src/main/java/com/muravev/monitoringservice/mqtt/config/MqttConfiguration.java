@@ -21,6 +21,7 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
 import org.springframework.messaging.MessagingException;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -49,6 +50,7 @@ public class MqttConfiguration {
         String[] topics = topicRepository.findAll().stream()
                 .map(MqttTopicEntity::getName)
                 .toArray(String[]::new);
+        log.info("Topics: {}", Arrays.asList(topics));
         MqttPahoMessageDrivenChannelAdapter adapter =
                 new MqttPahoMessageDrivenChannelAdapter(brokerUrl, clientId, topics);
         adapter.setAutoStartup(true);
