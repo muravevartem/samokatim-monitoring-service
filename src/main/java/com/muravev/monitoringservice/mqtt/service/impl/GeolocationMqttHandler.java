@@ -25,7 +25,7 @@ public class GeolocationMqttHandler implements MqttHandler {
 
         String[] splitMessage = geoMessage.split(";");
         if (splitMessage.length != MessageStructure.values().length) {
-            log.warn("[MQTT-GEO] Invalid message");
+            log.warn("[MQTT-GEO] Invalid message original {}", splitMessage.length);
             return;
         }
 
@@ -68,6 +68,9 @@ public class GeolocationMqttHandler implements MqttHandler {
 
         String item = message[structure.ordinal()];
         if (StringUtils.isEmpty(item))
+            return null;
+
+        if ("-".equals(item))
             return null;
 
         return mapper.apply(item);
