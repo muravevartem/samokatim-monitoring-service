@@ -36,5 +36,5 @@ management:
       probes:
         enabled: true
 mqtt:
-  broker-url: 'tcp://mqtt.eclipseprojects.io:1883'
+  broker-url: 'tcp://test.mosquitto.org:1883'
   client-id: 'smkt-app-client'
